@@ -37,7 +37,7 @@ public class TermDetail extends AppCompatActivity {
     String startDate;
     String endDate;
     EditText editTitle;
-    EditText editStartDate; //a
+    EditText editStartDate;
     EditText editEndDate;
     EditText editTermId;
 
