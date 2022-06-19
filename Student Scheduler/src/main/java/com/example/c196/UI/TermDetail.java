@@ -50,10 +50,6 @@ public class TermDetail extends AppCompatActivity {
     SimpleDateFormat sdf = new SimpleDateFormat(myFormat, Locale.US);
     Terms currentTerm;
     int numCourses;
-    int numTerms;
-
-    public TermDetail() throws ParseException {
-    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
