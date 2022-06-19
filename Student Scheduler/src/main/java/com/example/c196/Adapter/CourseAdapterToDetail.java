@@ -1,4 +1,4 @@
-package com.example.c196.UI;
+package com.example.c196.Adapter;
 
 import android.content.Context;
 import android.content.Intent;
@@ -12,6 +12,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.c196.Entity.Courses;
 import com.example.c196.R;
+import com.example.c196.UI.CourseDetail;
 
 import java.util.List;
 

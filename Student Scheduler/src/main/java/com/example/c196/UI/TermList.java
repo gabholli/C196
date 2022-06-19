@@ -10,6 +10,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 
+import com.example.c196.Adapter.TermAdapter;
 import com.example.c196.Database.Repository;
 import com.example.c196.Entity.Terms;
 import com.example.c196.R;
@@ -21,6 +22,8 @@ import java.util.List;
 public class TermList extends AppCompatActivity {
     private Repository repository;
 
+   public static RecyclerView termListRecyclerView;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -30,10 +33,10 @@ public class TermList extends AppCompatActivity {
         repository = new Repository(getApplication());
         List<Terms> allTerms = repository.getAllTerms();
         allTerms.sort(Comparator.comparing(Terms::getTermTitle));
-        RecyclerView recyclerView = findViewById(R.id.recyclerView10);
-        recyclerView.setLayoutManager(new LinearLayoutManager(this));
+        termListRecyclerView = findViewById(R.id.recyclerView10);
+        termListRecyclerView.setLayoutManager(new LinearLayoutManager(this));
         final TermAdapter termAdapter = new TermAdapter(this);
-        recyclerView.setAdapter(termAdapter);
+        termListRecyclerView.setAdapter(termAdapter);
         termAdapter.setTerms(allTerms);
 
     }

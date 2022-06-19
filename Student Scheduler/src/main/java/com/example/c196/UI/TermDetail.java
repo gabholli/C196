@@ -1,9 +1,5 @@
 package com.example.c196.UI;
 
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
-
 import android.app.DatePickerDialog;
 import android.os.Bundle;
 import android.view.Menu;
@@ -13,9 +9,15 @@ import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
+
+import com.example.c196.Adapter.CourseAdapterFromTerm;
 import com.example.c196.Database.Repository;
 import com.example.c196.Entity.Courses;
 import com.example.c196.Entity.Terms;
+import com.example.c196.Helper.HelperMethods;
 import com.example.c196.R;
 
 import java.text.ParseException;
@@ -49,6 +51,7 @@ public class TermDetail extends AppCompatActivity {
     SimpleDateFormat sdf = new SimpleDateFormat(myFormat, Locale.US);
     Terms currentTerm;
     int numCourses;
+    int numTerms;
 
     public TermDetail() throws ParseException {
     }
@@ -159,7 +162,6 @@ public class TermDetail extends AppCompatActivity {
         editEndDate.setText(sdf.format(myCalendarEnd.getTime()));
     }
 
-
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.menu_term_detail, menu);
         return true;
@@ -186,27 +188,35 @@ public class TermDetail extends AppCompatActivity {
             case R.id.termSave:
                 Terms term;
 
-                if (editTitle.getText().toString().isEmpty() || editStartDate.getText().toString().isEmpty()
-                        || editEndDate.getText().toString().isEmpty()) {
-                    Toast.makeText(TermDetail.this, "Please fill in all fields", Toast.LENGTH_LONG).show();
-                } else if (repository.getAllTerms().isEmpty()) {
-                    term = new Terms(1, editTitle.getText().toString(), editStartDate.getText().toString(),
-                            editEndDate.getText().toString());
-                    repository.insert(term);
-                    Toast.makeText(TermDetail.this, "Term saved", Toast.LENGTH_LONG).show();
-                } else if (termId == -1) {
-                    int newId = repository.getAllTerms().get(repository.getAllTerms().size() - 1).getTermId() + 1;
-                    term = new Terms(newId, editTitle.getText().toString(), editStartDate.getText().toString(),
-                            editEndDate.getText().toString());
-                    repository.insert(term);
-                    Toast.makeText(TermDetail.this, "Term saved", Toast.LENGTH_LONG).show();
-                } else {
-                    term = new Terms(termId, editTitle.getText().toString(), editStartDate.getText().toString(),
-                            editEndDate.getText().toString());
-                    repository.update(term);
-                    Toast.makeText(TermDetail.this, "Term saved", Toast.LENGTH_LONG).show();
-                }
+                try {
 
+                    if (!checkTermDates(editStartDate.getText().toString(), editEndDate.getText().toString())) {
+                        Toast.makeText(TermDetail.this, "Start date cannot be after end date", Toast.LENGTH_LONG).show();
+                    }
+                    if (editTitle.getText().toString().isEmpty() || editStartDate.getText().toString().isEmpty()
+                            || editEndDate.getText().toString().isEmpty()) {
+                        Toast.makeText(TermDetail.this, "Please fill in all fields", Toast.LENGTH_LONG).show();
+                    } else if (repository.getAllTerms().isEmpty()) {
+                        term = new Terms(1, editTitle.getText().toString(), editStartDate.getText().toString(),
+                                editEndDate.getText().toString());
+                        repository.insert(term);
+                        Toast.makeText(TermDetail.this, "Term saved. Please return to term list and refresh", Toast.LENGTH_LONG).show();
+                    } else if (termId == -1) {
+                        int newId = repository.getAllTerms().get(repository.getAllTerms().size() - 1).getTermId() + 1;
+                        term = new Terms(newId, editTitle.getText().toString(), editStartDate.getText().toString(),
+                                editEndDate.getText().toString());
+                        repository.insert(term);
+                        Toast.makeText(TermDetail.this, "Term saved. Please return to term list and refresh", Toast.LENGTH_LONG).show();
+                    } else {
+                        term = new Terms(termId, editTitle.getText().toString(), editStartDate.getText().toString(),
+                                editEndDate.getText().toString());
+                        repository.update(term);
+                        Toast.makeText(TermDetail.this, "Term saved. Please return to term list and refresh", Toast.LENGTH_LONG).show();
+                    }
+                } catch (ParseException e) {
+                    e.printStackTrace();
+                }
+                HelperMethods.addOrDeleteDateFromTermList(repository, this);
                 return true;
             case R.id.termDelete:
                 for (Terms t : repository.getAllTerms()) {
@@ -218,16 +228,31 @@ public class TermDetail extends AppCompatActivity {
                     if (c.getTermId() == termId) ++numCourses;
                 }
 
-                if (numCourses == 0) {
+                if (repository.getAllTerms().isEmpty()) {
+                    Toast.makeText(TermDetail.this, "Cannot delete. Please save, " +
+                                    "return to term list and refresh",
+                            Toast.LENGTH_LONG).show();
+                } else if (title == null) {
+                    Toast.makeText(TermDetail.this, "Cannot delete. Please save, " +
+                                    "return to term list and refresh",
+                            Toast.LENGTH_LONG).show();
+                } else if (numCourses == 0) {
                     repository.delete(currentTerm);
                     Toast.makeText(TermDetail.this, currentTerm.getTermTitle() +
-                            " was deleted", Toast.LENGTH_LONG).show();
+                            " was deleted. Please return to term list and refresh", Toast.LENGTH_LONG).show();
                 } else {
                     Toast.makeText(TermDetail.this, "Can't delete a term with associated courses",
                             Toast.LENGTH_LONG).show();
                 }
+                HelperMethods.addOrDeleteDateFromTermList(repository, this);
                 return true;
         }
         return true;
+    }
+
+    public static boolean checkTermDates(String d1, String d2) throws ParseException {
+        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("MM/dd/yy");
+        return simpleDateFormat.parse(d1).before(simpleDateFormat.parse(d2)) ||
+                simpleDateFormat.parse(d1).equals(simpleDateFormat.parse(d2));
     }
 }

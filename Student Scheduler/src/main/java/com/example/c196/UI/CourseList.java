@@ -11,9 +11,9 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.Toast;
 
+import com.example.c196.Adapter.CourseAdapterToDetail;
 import com.example.c196.Database.Repository;
 import com.example.c196.Entity.Courses;
-import com.example.c196.Entity.Terms;
 import com.example.c196.R;
 
 import java.util.Comparator;
@@ -21,6 +21,8 @@ import java.util.List;
 
 
 public class CourseList extends AppCompatActivity {
+
+    public static RecyclerView courseListRecyclerView;
 
     private Repository repository;
 
@@ -33,10 +35,10 @@ public class CourseList extends AppCompatActivity {
         repository = new Repository(getApplication());
         List<Courses> allCourses = repository.getAllCourses();
         allCourses.sort(Comparator.comparing(Courses::getCourseTitle));
-        RecyclerView recyclerView = findViewById(R.id.recyclerViewCourseList);
-        recyclerView.setLayoutManager(new LinearLayoutManager(this));
+        courseListRecyclerView = findViewById(R.id.recyclerViewCourseList);
+        courseListRecyclerView.setLayoutManager(new LinearLayoutManager(this));
         final CourseAdapterToDetail courseDetailAdapter = new CourseAdapterToDetail(this);
-        recyclerView.setAdapter(courseDetailAdapter);
+        courseListRecyclerView.setAdapter(courseDetailAdapter);
         courseDetailAdapter.setCourses(allCourses);
 
     }

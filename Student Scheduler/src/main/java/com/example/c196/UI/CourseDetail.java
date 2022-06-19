@@ -1,13 +1,9 @@
 package com.example.c196.UI;
 
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.recyclerview.widget.RecyclerView;
-
 import android.app.AlarmManager;
 import android.app.DatePickerDialog;
 import android.app.PendingIntent;
 import android.content.Context;
-import android.content.Entity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
@@ -16,13 +12,21 @@ import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.DatePicker;
 import android.widget.EditText;
-import android.widget.SimpleCursorAdapter;
 import android.widget.Spinner;
 import android.widget.Toast;
 
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
+
+import com.example.c196.Adapter.AssessmentAdapterFromCourse;
+import com.example.c196.Adapter.CourseAdapterToDetail;
 import com.example.c196.Database.Repository;
+import com.example.c196.Entity.Assessments;
 import com.example.c196.Entity.Courses;
+import com.example.c196.Entity.MyReceiver;
 import com.example.c196.Entity.Terms;
+import com.example.c196.Helper.HelperMethods;
 import com.example.c196.R;
 
 import java.text.ParseException;
@@ -48,6 +52,7 @@ public class CourseDetail extends AppCompatActivity {
     String courseNote;
 
     Courses currentCourse;
+    int numCourses;
     int courseId;
     int termId;
     EditText editTitle;
@@ -105,6 +110,16 @@ public class CourseDetail extends AppCompatActivity {
         termSpinner = (Spinner) findViewById(R.id.termSpinner);
         RecyclerView recyclerView = findViewById(R.id.associatedAssessmentsRecycler);
         repository = new Repository(getApplication());
+        recyclerView.setLayoutManager(new LinearLayoutManager(this));
+        final AssessmentAdapterFromCourse assessmentListAdapter = new AssessmentAdapterFromCourse(this);
+        recyclerView.setAdapter(assessmentListAdapter);
+        List<Assessments> filteredAssessments = new ArrayList<>();
+        filteredAssessments.sort(Comparator.comparing(Assessments::getAssessmentName));
+        for (Assessments a : repository.getAllAssessments()) {
+            if (a.getCourseId() == courseId) filteredAssessments.add(a);
+        }
+        assessmentListAdapter.setAssessments(filteredAssessments);
+
         String myFormat = "MM/dd/yy";
         SimpleDateFormat sdf = new SimpleDateFormat(myFormat, Locale.US);
 
@@ -123,7 +138,6 @@ public class CourseDetail extends AppCompatActivity {
         termSpinner.setAdapter(adapter);
 
         termSpinner.setSelection(termsIntegerList.indexOf(termId));
-//        selectSpinnerItemByValue(termSpinner, termId);
 
 
         startCourseDate = new DatePickerDialog.OnDateSetListener() {
@@ -209,98 +223,163 @@ public class CourseDetail extends AppCompatActivity {
                 this.finish();
                 return true;
             case R.id.courseDetailRefresh:
-//                repository = new Repository(getApplication());
-//                List<Courses> filteredCourses = new ArrayList<>();
+                repository = new Repository(getApplication());
+                RecyclerView recyclerView = findViewById(R.id.associatedAssessmentsRecycler);
+                recyclerView.setLayoutManager(new LinearLayoutManager(this));
+                final AssessmentAdapterFromCourse assessmentListAdapter = new AssessmentAdapterFromCourse(this);
+                recyclerView.setAdapter(assessmentListAdapter);
+                List<Assessments> filteredAssessments = new ArrayList<>();
+                filteredAssessments.sort(Comparator.comparing(Assessments::getAssessmentName));
+
+                for (Assessments a : repository.getAllAssessments()) {
+                    if (a.getCourseId() == courseId) filteredAssessments.add(a);
+                }
+                assessmentListAdapter.setAssessments(filteredAssessments);
+                return true;
             case R.id.courseSave:
                 Courses course;
 
-                if (editTitle.getText().toString().isEmpty() || editStart.getText().toString().isEmpty() ||
-                        editEnd.getText().toString().isEmpty() || editStatus.getText().toString().isEmpty() ||
-                        editName.getText().toString().isEmpty() || editPhone.getText().toString().isEmpty() ||
-                        editEmail.getText().toString().isEmpty()) {
-                    Toast.makeText(CourseDetail.this, "Please fill in all fields", Toast.LENGTH_LONG).show();
-                } else if (repository.getAllCourses().isEmpty()) {
-                    course = new Courses(1, editTitle.getText().toString(), editStart.getText().toString(),
-                            editEnd.getText().toString(), editStatus.getText().toString(),
-                            editName.getText().toString(), editPhone.getText().toString(),
-                            editEmail.getText().toString(), editNote.getText().toString(), (Integer) termSpinner.getSelectedItem());
-                    repository.insert(course);
-                    Toast.makeText(CourseDetail.this, "Course saved", Toast.LENGTH_LONG).show();
-                } else if (courseId == -1) {
-                    int newId = repository.getAllCourses().get(repository.getAllCourses().size() - 1).getCourseId() + 1;
-                    course = new Courses(newId, editTitle.getText().toString(), editStart.getText().toString(),
-                            editEnd.getText().toString(), editStatus.getText().toString(),
-                            editName.getText().toString(), editPhone.getText().toString(),
-                            editEmail.getText().toString(), editNote.getText().toString(), (Integer) termSpinner.getSelectedItem());
-                    repository.insert(course);
-                    Toast.makeText(CourseDetail.this, "Course saved", Toast.LENGTH_LONG).show();
+                try {
 
-                } else {
-                    course = new Courses(courseId, editTitle.getText().toString(), editStart.getText().toString(),
-                            editEnd.getText().toString(), editStatus.getText().toString(),
-                            editName.getText().toString(), editPhone.getText().toString(),
-                            editEmail.getText().toString(), editNote.getText().toString(), (Integer) termSpinner.getSelectedItem());
-                    repository.update(course);
-                    Toast.makeText(CourseDetail.this, "Course saved", Toast.LENGTH_LONG).show();
+                    if (editTitle.getText().toString().isEmpty() || editStart.getText().toString().isEmpty() ||
+                            editEnd.getText().toString().isEmpty() || editStatus.getText().toString().isEmpty() ||
+                            editName.getText().toString().isEmpty() || editPhone.getText().toString().isEmpty() ||
+                            editEmail.getText().toString().isEmpty()) {
+                        Toast.makeText(CourseDetail.this, "Please fill in all fields", Toast.LENGTH_LONG).show();
+                    } else if (!checkCourseDates(editStart.getText().toString(), editEnd.getText().toString())) {
+                        Toast.makeText(CourseDetail.this, "Start date cannot be after end date", Toast.LENGTH_LONG).show();
+                    } else if (repository.getAllCourses().isEmpty()) {
+                        course = new Courses(1, editTitle.getText().toString(), editStart.getText().toString(),
+                                editEnd.getText().toString(), editStatus.getText().toString(),
+                                editName.getText().toString(), editPhone.getText().toString(),
+                                editEmail.getText().toString(), editNote.getText().toString(), (Integer) termSpinner.getSelectedItem());
+                        repository.insert(course);
+                        Toast.makeText(CourseDetail.this, "Course saved. Please return " +
+                                "to course list and refresh", Toast.LENGTH_LONG).show();
+                    } else if (courseId == -1) {
+                        int newId = repository.getAllCourses().get(repository.getAllCourses().size() - 1).getCourseId() + 1;
+                        course = new Courses(newId, editTitle.getText().toString(), editStart.getText().toString(),
+                                editEnd.getText().toString(), editStatus.getText().toString(),
+                                editName.getText().toString(), editPhone.getText().toString(),
+                                editEmail.getText().toString(), editNote.getText().toString(), (Integer) termSpinner.getSelectedItem());
+                        repository.insert(course);
+                        Toast.makeText(CourseDetail.this, "Course saved. Please return " +
+                                "to course list and refresh", Toast.LENGTH_LONG).show();
 
+                    } else {
+                        course = new Courses(courseId, editTitle.getText(). toString(), editStart.getText().toString(),
+                                editEnd.getText().toString(), editStatus.getText().toString(),
+                                editName.getText().toString(), editPhone.getText().toString(),
+                                editEmail.getText().toString(), editNote.getText().toString(), (Integer) termSpinner.getSelectedItem());
+                        repository.update(course);
+                        Toast.makeText(CourseDetail.this, "Course saved. Please return " +
+                                "to course list and refresh", Toast.LENGTH_LONG).show();
+                    }
+                } catch (ParseException e) {
+                    e.printStackTrace();
                 }
+                HelperMethods.addOrDeleteDataFromCourseList(repository, this);
                 return true;
             case R.id.courseDelete:
                 for (Courses c : repository.getAllCourses()) {
                     if (c.getCourseId() == courseId) currentCourse = c;
                 }
-                repository.delete(currentCourse);
-                Toast.makeText(CourseDetail.this, currentCourse.getCourseTitle()
-                        + " was deleted", Toast.LENGTH_LONG).show();
+                if (repository.getAllCourses().isEmpty()) {
+                    Toast.makeText(CourseDetail.this, "Cannot delete. Please save, return to course list" +
+                                    " and refresh",
+                            Toast.LENGTH_LONG).show();
+                } else if (title == null) {
+                    Toast.makeText(CourseDetail.this, "Cannot delete. Please save, return to course list" +
+                                    " and refresh",
+                            Toast.LENGTH_LONG).show();
+                } else {
+                    repository.delete(currentCourse);
+                    Toast.makeText(CourseDetail.this, currentCourse.getCourseTitle()
+                            + " was deleted. Please return to course list and refresh", Toast.LENGTH_LONG).show();
+                }
+                HelperMethods.addOrDeleteDataFromCourseList(repository, this);
                 return true;
             case R.id.shareNote:
-                Intent sendIntent = new Intent();
-                sendIntent.setAction(Intent.ACTION_SEND);
-                sendIntent.putExtra(Intent.EXTRA_TEXT, editNote.getText().toString());
-                sendIntent.putExtra(Intent.EXTRA_TITLE, "Note From " + editTitle.getText().toString());
-                sendIntent.setType("text/plain");
-                Intent shareIntent = Intent.createChooser(sendIntent, null);
-                startActivity(shareIntent);
+                if (title == null) {
+                    Toast.makeText(CourseDetail.this, "Please save, return to course list and refresh",
+                            Toast.LENGTH_LONG).show();
+                }
+                else if (editNote.getText().toString().isEmpty()) {
+                    Toast.makeText(CourseDetail.this, "Please enter a note to share",
+                            Toast.LENGTH_LONG).show();
+                } else {
+                    Intent sendIntent = new Intent();
+                    sendIntent.setAction(Intent.ACTION_SEND);
+                    sendIntent.putExtra(Intent.EXTRA_TEXT, editNote.getText().toString());
+                    sendIntent.putExtra(Intent.EXTRA_TITLE, "Note From " + editTitle.getText().toString());
+                    sendIntent.setType("text/plain");
+                    Intent shareIntent = Intent.createChooser(sendIntent, null);
+                    startActivity(shareIntent);
+                }
                 return true;
             case R.id.notifyStart:
-                String dateFromScreenStart = editStart.getText().toString();
-                String myFormatStart = "MM/dd/yy";
-                SimpleDateFormat sdfStart = new SimpleDateFormat(myFormatStart, Locale.US);
-                Date myStartDate = null;
-                try {
-                    myStartDate = sdfStart.parse(dateFromScreenStart);
-                } catch (ParseException ex) {
-                    ex.printStackTrace();
+                if (title == null) {
+                    Toast.makeText(CourseDetail.this, "Please save and refresh " +
+                            "from course list", Toast.LENGTH_LONG).show();
+                } else if (editStart.getText().toString().isEmpty()) {
+                    Toast.makeText(CourseDetail.this, "Please enter starting date",
+                            Toast.LENGTH_LONG).show();
+                } else {
+                    String dateFromScreenStart = editStart.getText().toString();
+                    String myFormatStart = "MM/dd/yy";
+                    SimpleDateFormat sdfStart = new SimpleDateFormat(myFormatStart, Locale.US);
+                    Date myStartDate = null;
+                    try {
+                        myStartDate = sdfStart.parse(dateFromScreenStart);
+                    } catch (ParseException ex) {
+                        ex.printStackTrace();
+                    }
+                    Long triggerStart = myStartDate.getTime();
+                    Intent intentStart = new Intent(this, MyReceiver.class);
+                    intentStart.putExtra("key", title + " starts today");
+                    PendingIntent startSender = PendingIntent.getBroadcast(CourseDetail.this,
+                            EntryScreen.numAlert++, intentStart, PendingIntent.FLAG_IMMUTABLE);
+                    AlarmManager alarmManagerStart = (AlarmManager) getSystemService(Context.ALARM_SERVICE);
+                    alarmManagerStart.set(AlarmManager.RTC_WAKEUP, triggerStart, startSender);
                 }
-                Long triggerStart = myStartDate.getTime();
-                Intent intentStart = new Intent(CourseDetail.this, MyReceiver.class);
-                intentStart.putExtra("key", title + " starts today");
-                PendingIntent startSender = PendingIntent.getBroadcast(CourseDetail.this, ++EntryScreen.numAlert,
-                        intentStart, PendingIntent.FLAG_IMMUTABLE);
-                AlarmManager alarmManagerStart = (AlarmManager) getSystemService(Context.ALARM_SERVICE);
-                alarmManagerStart.set(AlarmManager.RTC_WAKEUP, triggerStart, startSender);
                 return true;
             case R.id.notifyEnd:
-                String dateFromScreenEnd = editEnd.getText().toString();
-                String myFormatEnd = "MM/dd/yy";
-                SimpleDateFormat sdfEnd = new SimpleDateFormat(myFormatEnd, Locale.US);
-                Date myEndDate = null;
-                try {
-                    myEndDate = sdfEnd.parse(dateFromScreenEnd);
-                } catch (ParseException ex) {
-                    ex.printStackTrace();
+                if (title == null) {
+                    Toast.makeText(CourseDetail.this, "Please save and refresh " +
+                            "from course list", Toast.LENGTH_LONG).show();
+                } else if (editEnd.getText().toString().isEmpty()) {
+                    Toast.makeText(CourseDetail.this, "Please enter ending date",
+                            Toast.LENGTH_LONG).show();
+                } else {
+                    String dateFromScreenEnd = editEnd.getText().toString();
+                    String myFormatEnd = "MM/dd/yy";
+                    SimpleDateFormat sdfEnd = new SimpleDateFormat(myFormatEnd, Locale.US);
+                    Date myEndDate = null;
+                    try {
+                        myEndDate = sdfEnd.parse(dateFromScreenEnd);
+                    } catch (ParseException ex) {
+                        ex.printStackTrace();
+                    }
+                    Long triggerEnd = myEndDate.getTime();
+                    Intent intentEnd = new Intent(CourseDetail.this, MyReceiver.class);
+                    intentEnd.putExtra("key", title + " ends today");
+
+                    PendingIntent endSender = PendingIntent.getBroadcast(this,
+                            EntryScreen.numAlert++,
+                            intentEnd, PendingIntent.FLAG_IMMUTABLE);
+                    AlarmManager alarmManagerEnd = (AlarmManager) getSystemService(Context.ALARM_SERVICE);
+                    alarmManagerEnd.set(AlarmManager.RTC_WAKEUP, triggerEnd, endSender);
                 }
-                Long triggerEnd = myEndDate.getTime();
-                Intent intentEnd = new Intent(CourseDetail.this, MyReceiver.class);
-                intentEnd.putExtra("key", title + " ends today");
-                PendingIntent endSender = PendingIntent.getBroadcast(CourseDetail.this, ++EntryScreen.numAlert,
-                        intentEnd, PendingIntent.FLAG_IMMUTABLE);
-                AlarmManager alarmManagerEnd = (AlarmManager) getSystemService(Context.ALARM_SERVICE);
-                alarmManagerEnd.set(AlarmManager.RTC_WAKEUP, triggerEnd, endSender);
+
                 return true;
         }
         return super.onOptionsItemSelected(item);
 
     }
 
+    public static boolean checkCourseDates(String d1, String d2) throws ParseException {
+        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("MM/dd/yy");
+        return simpleDateFormat.parse(d1).before(simpleDateFormat.parse(d2)) ||
+                simpleDateFormat.parse(d1).equals(simpleDateFormat.parse(d2));
+    }
 }
