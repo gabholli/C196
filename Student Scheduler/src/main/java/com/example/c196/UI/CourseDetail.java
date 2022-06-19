@@ -26,7 +26,6 @@ import com.example.c196.Entity.Assessments;
 import com.example.c196.Entity.Courses;
 import com.example.c196.Entity.MyReceiver;
 import com.example.c196.Entity.Terms;
-import com.example.c196.Helper.HelperMethods;
 import com.example.c196.R;
 
 import java.text.ParseException;
@@ -278,7 +277,6 @@ public class CourseDetail extends AppCompatActivity {
                 } catch (ParseException e) {
                     e.printStackTrace();
                 }
-                HelperMethods.addOrDeleteDataFromCourseList(repository, this);
                 return true;
             case R.id.courseDelete:
                 for (Courses c : repository.getAllCourses()) {
@@ -297,7 +295,6 @@ public class CourseDetail extends AppCompatActivity {
                     Toast.makeText(CourseDetail.this, currentCourse.getCourseTitle()
                             + " was deleted. Please return to course list and refresh", Toast.LENGTH_LONG).show();
                 }
-                HelperMethods.addOrDeleteDataFromCourseList(repository, this);
                 return true;
             case R.id.shareNote:
                 if (title == null) {

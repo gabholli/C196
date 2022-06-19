@@ -17,7 +17,6 @@ import com.example.c196.Adapter.CourseAdapterFromTerm;
 import com.example.c196.Database.Repository;
 import com.example.c196.Entity.Courses;
 import com.example.c196.Entity.Terms;
-import com.example.c196.Helper.HelperMethods;
 import com.example.c196.R;
 
 import java.text.ParseException;
@@ -216,7 +215,6 @@ public class TermDetail extends AppCompatActivity {
                 } catch (ParseException e) {
                     e.printStackTrace();
                 }
-                HelperMethods.addOrDeleteDateFromTermList(repository, this);
                 return true;
             case R.id.termDelete:
                 for (Terms t : repository.getAllTerms()) {
@@ -244,7 +242,6 @@ public class TermDetail extends AppCompatActivity {
                     Toast.makeText(TermDetail.this, "Can't delete a term with associated courses",
                             Toast.LENGTH_LONG).show();
                 }
-                HelperMethods.addOrDeleteDateFromTermList(repository, this);
                 return true;
         }
         return true;
