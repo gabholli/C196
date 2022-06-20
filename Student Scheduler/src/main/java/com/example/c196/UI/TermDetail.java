@@ -50,6 +50,7 @@ public class TermDetail extends AppCompatActivity {
     SimpleDateFormat sdf = new SimpleDateFormat(myFormat, Locale.US);
     Terms currentTerm;
     int numCourses;
+    int numTerms;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -185,12 +186,11 @@ public class TermDetail extends AppCompatActivity {
 
                 try {
 
-                    if (!checkTermDates(editStartDate.getText().toString(), editEndDate.getText().toString())) {
-                        Toast.makeText(TermDetail.this, "Start date cannot be after end date", Toast.LENGTH_LONG).show();
-                    }
                     if (editTitle.getText().toString().isEmpty() || editStartDate.getText().toString().isEmpty()
                             || editEndDate.getText().toString().isEmpty()) {
                         Toast.makeText(TermDetail.this, "Please fill in all fields", Toast.LENGTH_LONG).show();
+                    } else if (!checkTermDates(editStartDate.getText().toString(), editEndDate.getText().toString())) {
+                        Toast.makeText(TermDetail.this, "Start date cannot be after end date", Toast.LENGTH_LONG).show();
                     } else if (repository.getAllTerms().isEmpty()) {
                         term = new Terms(1, editTitle.getText().toString(), editStartDate.getText().toString(),
                                 editEndDate.getText().toString());

@@ -2,11 +2,14 @@ package com.example.c196.UI;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.app.DatePickerDialog;
 import android.os.Bundle;
 import android.widget.EditText;
 import android.widget.Spinner;
 
 import com.example.c196.R;
+
+import java.util.Calendar;
 
 public class AssessmentDetail extends AppCompatActivity {
 
@@ -24,6 +27,12 @@ public class AssessmentDetail extends AppCompatActivity {
     EditText editEnd;
 
     Spinner typeSpinner;
+    Spinner courseSpinner;
+
+    DatePickerDialog.OnDateSetListener startAssessmentDate;
+    DatePickerDialog.OnDateSetListener endAssessmentDate;
+    final Calendar myCalendarAssessmentStart = Calendar.getInstance();
+    final Calendar myCalendarAssessmentEnd = Calendar.getInstance();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

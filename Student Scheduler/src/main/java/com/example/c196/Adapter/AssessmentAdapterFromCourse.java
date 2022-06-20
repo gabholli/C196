@@ -20,10 +20,12 @@ public class AssessmentAdapterFromCourse extends RecyclerView.Adapter<Assessment
 
     class AssessmentViewHolder extends RecyclerView.ViewHolder {
         private final TextView assessmentItemView;
+        private final TextView assessmentItemView2;
 
         private AssessmentViewHolder(View itemView) {
             super(itemView);
-            assessmentItemView = itemView.findViewById(R.id.assessmentListTextRow);
+            assessmentItemView = itemView.findViewById(R.id.assessmentListTitleRow);
+            assessmentItemView2 = itemView.findViewById(R.id.assessmentListIdRow);
             itemView.setOnClickListener((new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
@@ -62,9 +64,12 @@ public class AssessmentAdapterFromCourse extends RecyclerView.Adapter<Assessment
             if (mAssessments != null) {
                 Assessments current = mAssessments.get(position);
                 String name = current.getAssessmentName();
+                int assessmentId = current.getAssessmentId();
                 holder.assessmentItemView.setText(name);
+                holder.assessmentItemView2.setText(Integer.toString(assessmentId));
             } else {
-                holder.assessmentItemView.setText("No assessment name");
+                holder.assessmentItemView.setText("No Assessment Name");
+                holder.assessmentItemView2.setText("No Assessment ID");
             }
         }
 

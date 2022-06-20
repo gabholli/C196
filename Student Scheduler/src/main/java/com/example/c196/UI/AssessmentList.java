@@ -32,7 +32,7 @@ public class AssessmentList extends AppCompatActivity {
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setDisplayShowHomeEnabled(true);
         repository = new Repository(getApplication());
-        List<Assessments> allAssessments = new ArrayList<>();
+        List<Assessments> allAssessments = repository.getAllAssessments();
         allAssessments.sort(Comparator.comparing(Assessments::getAssessmentName));
         RecyclerView recyclerView = findViewById(R.id.assessmentListRecycler);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
@@ -52,7 +52,7 @@ public class AssessmentList extends AppCompatActivity {
                 this.finish();
                 return true;
             case R.id.assessmentListRefresh:
-                List<Assessments> allAssessments = new ArrayList<>();
+                List<Assessments> allAssessments = repository.getAllAssessments();
                 allAssessments.sort(Comparator.comparing(Assessments::getAssessmentName));
                 repository = new Repository(getApplication());
                 RecyclerView recyclerView = findViewById(R.id.assessmentListRecycler);

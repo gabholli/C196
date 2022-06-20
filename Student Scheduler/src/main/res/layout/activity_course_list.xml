@@ -25,7 +25,7 @@
         android:layout_marginStart="17dp"
         android:layout_marginTop="16dp"
         android:layout_marginBottom="18dp"
-        android:text="List Of All Courses:"
+        android:text="List Of All Courses (Course Name And Course ID Shown):"
         app:layout_constraintBottom_toTopOf="@+id/recyclerViewCourseList"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />

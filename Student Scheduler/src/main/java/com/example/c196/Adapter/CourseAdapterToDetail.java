@@ -22,12 +22,12 @@ public class CourseAdapterToDetail extends RecyclerView.Adapter<CourseAdapterToD
 
     class CourseDetailViewHolder extends RecyclerView.ViewHolder {
 
-        private final TextView courseDetailItemView;
-
+        private final TextView courseItemView;
+        private final TextView courseItemView2;
         private CourseDetailViewHolder(View itemView) {
             super(itemView);
-            courseDetailItemView = itemView.findViewById(R.id.courseListItemTextView);
-
+            courseItemView = itemView.findViewById(R.id.termDetailCourseListTitleRow);
+            courseItemView2 = itemView.findViewById(R.id.termDetailCourseIdRow);
             itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
@@ -72,10 +72,13 @@ public class CourseAdapterToDetail extends RecyclerView.Adapter<CourseAdapterToD
         if (mCourses != null) {
             Courses current = mCourses.get(position);
             String title = current.getCourseTitle();
-            holder.courseDetailItemView.setText(title);
+            int courseId = current.getCourseId();
+            holder.courseItemView.setText(title);
+            holder.courseItemView2.setText(Integer.toString(courseId));
         }
         else {
-            holder.courseDetailItemView.setText("No course");
+            holder.courseItemView.setText("No Course Title");
+            holder.courseItemView2.setText("No Course ID");
         }
     }
 

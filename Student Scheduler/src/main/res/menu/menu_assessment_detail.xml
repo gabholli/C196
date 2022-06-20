@@ -1,4 +1,24 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
 
+    <item android:title="Refresh"
+        android:orderInCategory="100"
+        android:id="@+id/assessmentDetailRefresh"/>
+
+    <item android:title="Save Assessment"
+        android:orderInCategory="100"
+        android:id="@+id/assessmentSave"/>
+
+    <item android:title="Delete Assessment"
+        android:orderInCategory="100"
+        android:id="@+id/assessmentDelete"/>
+
+    <item android:title="Notify Assessment Start Date"
+        android:orderInCategory="100"
+        android:id="@+id/notifyAssessmentStart"/>
+
+    <item android:title="Notify Assessment End Date"
+        android:orderInCategory="100"
+        android:id="@+id/notifyAssessmentEnd"/>
+
 </menu>

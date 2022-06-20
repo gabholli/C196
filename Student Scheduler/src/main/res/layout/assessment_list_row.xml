@@ -2,16 +2,30 @@
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content">
+    android:layout_height="wrap_content"
+    xmlns:tools="http://schemas.android.com/tools">
 
     <TextView
-        android:id="@+id/assessmentListTextRow"
-        android:layout_width="wrap_content"
+        android:id="@+id/assessmentListTitleRow"
+        android:layout_width="200dp"
         android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
-        android:textSize="20sp"
-        app:layout_constraintEnd_toStartOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        android:layout_margin="2dp"
+        android:background="@color/cardview_light_background"
+        android:text="TextView"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        tools:layout_editor_absoluteX="149dp"
+        tools:layout_editor_absoluteY="196dp" />
+    <TextView
+        android:id="@+id/assessmentListIdRow"
+        android:layout_width="200dp"
+        android:layout_height="wrap_content"
+        android:text="TextView"
+        android:layout_margin="2dp"
+        android:background="@color/cardview_light_background"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintLeft_toRightOf="@id/assessmentListTitleRow"
+        tools:layout_editor_absoluteX="149dp"
+        tools:layout_editor_absoluteY="196dp" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
