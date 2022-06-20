@@ -38,5 +38,11 @@ public class AssessmentDetail extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_assessment_detail);
+        getSupportActionBar().setDisplayShowHomeEnabled(true);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        assessmentId = getIntent().getIntExtra("id", -1);
+        name = getIntent().getStringExtra("name");
+        editName = findViewById(R.id.assessmentNameEditText);
+        editName.setText(name);
     }
 }

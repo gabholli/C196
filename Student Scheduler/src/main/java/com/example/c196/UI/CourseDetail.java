@@ -333,7 +333,7 @@ public class CourseDetail extends AppCompatActivity {
                     }
                     Long triggerStart = myStartDate.getTime();
                     Intent intentStart = new Intent(this, MyReceiver.class);
-                    intentStart.putExtra("key", title + " starts today");
+                    intentStart.putExtra("key", title + " starts on " + sdfStart.format(myStartDate));
                     PendingIntent startSender = PendingIntent.getBroadcast(CourseDetail.this,
                             EntryScreen.numAlert++, intentStart, PendingIntent.FLAG_IMMUTABLE);
                     AlarmManager alarmManagerStart = (AlarmManager) getSystemService(Context.ALARM_SERVICE);
@@ -359,7 +359,7 @@ public class CourseDetail extends AppCompatActivity {
                     }
                     Long triggerEnd = myEndDate.getTime();
                     Intent intentEnd = new Intent(CourseDetail.this, MyReceiver.class);
-                    intentEnd.putExtra("key", title + " ends today");
+                    intentEnd.putExtra("key", title + " ends on " + sdfEnd.format(myEndDate));
 
                     PendingIntent endSender = PendingIntent.getBroadcast(this,
                             EntryScreen.numAlert++,
