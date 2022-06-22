@@ -32,7 +32,7 @@ public class TermList extends AppCompatActivity {
         getSupportActionBar().setDisplayShowHomeEnabled(true);
         repository = new Repository(getApplication());
         List<Terms> allTerms = repository.getAllTerms();
-        allTerms.sort(Comparator.comparing(Terms::getTermTitle));
+        allTerms.sort(Comparator.comparing(Terms::getTermId));
         termListRecyclerView = findViewById(R.id.recyclerView10);
         termListRecyclerView.setLayoutManager(new LinearLayoutManager(this));
         final TermAdapter termAdapter = new TermAdapter(this);
@@ -55,7 +55,7 @@ public class TermList extends AppCompatActivity {
             case R.id.termRefresh:
                 repository = new Repository(getApplication());
                 List<Terms> allTerms = repository.getAllTerms();
-                allTerms.sort(Comparator.comparing(Terms::getTermTitle));
+                allTerms.sort(Comparator.comparing(Terms::getTermId));
                 RecyclerView recyclerView = findViewById(R.id.recyclerView10);
                 recyclerView.setLayoutManager(new LinearLayoutManager(this));
                 final TermAdapter termAdapter = new TermAdapter(this);

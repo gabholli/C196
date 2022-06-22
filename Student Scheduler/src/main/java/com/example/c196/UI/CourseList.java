@@ -34,7 +34,7 @@ public class CourseList extends AppCompatActivity {
         getSupportActionBar().setDisplayShowHomeEnabled(true);
         repository = new Repository(getApplication());
         List<Courses> allCourses = repository.getAllCourses();
-        allCourses.sort(Comparator.comparing(Courses::getCourseTitle));
+        allCourses.sort(Comparator.comparing(Courses::getCourseId));
         courseListRecyclerView = findViewById(R.id.recyclerViewCourseList);
         courseListRecyclerView.setLayoutManager(new LinearLayoutManager(this));
         final CourseAdapterToDetail courseDetailAdapter = new CourseAdapterToDetail(this);

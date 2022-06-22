@@ -82,7 +82,7 @@ public class TermDetail extends AppCompatActivity {
                 filteredCourses.add(c);
             }
         }
-        filteredCourses.sort(Comparator.comparing(Courses::getCourseTitle));
+        filteredCourses.sort(Comparator.comparing(Courses::getCourseId));
         courseAdapter.setCourses(filteredCourses);
 
 
@@ -178,7 +178,7 @@ public class TermDetail extends AppCompatActivity {
                 for (Courses c : repository.getAllCourses()) {
                     if (c.getTermId() == termId) filteredCourses.add(c);
                 }
-                filteredCourses.sort(Comparator.comparing(Courses::getCourseTitle));
+                filteredCourses.sort(Comparator.comparing(Courses::getCourseId));
                 courseAdapter.setCourses(filteredCourses);
                 return true;
             case R.id.termSave:

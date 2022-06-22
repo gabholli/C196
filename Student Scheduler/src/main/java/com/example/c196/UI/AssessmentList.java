@@ -12,6 +12,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.c196.Adapter.AssessmentAdapterFromCourse;
+import com.example.c196.Adapter.AssessmentAdapterToDetail;
 import com.example.c196.Database.Repository;
 import com.example.c196.Entity.Assessments;
 import com.example.c196.R;
@@ -33,10 +34,10 @@ public class AssessmentList extends AppCompatActivity {
         getSupportActionBar().setDisplayShowHomeEnabled(true);
         repository = new Repository(getApplication());
         List<Assessments> allAssessments = repository.getAllAssessments();
-        allAssessments.sort(Comparator.comparing(Assessments::getAssessmentName));
+        allAssessments.sort(Comparator.comparing(Assessments::getAssessmentId));
         RecyclerView recyclerView = findViewById(R.id.assessmentListRecycler);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
-        final AssessmentAdapterFromCourse assessmentAdapter = new AssessmentAdapterFromCourse(this);
+        final AssessmentAdapterToDetail assessmentAdapter = new AssessmentAdapterToDetail(this);
         recyclerView.setAdapter(assessmentAdapter);
         assessmentAdapter.setAssessments(allAssessments);
     }
@@ -53,11 +54,11 @@ public class AssessmentList extends AppCompatActivity {
                 return true;
             case R.id.assessmentListRefresh:
                 List<Assessments> allAssessments = repository.getAllAssessments();
-                allAssessments.sort(Comparator.comparing(Assessments::getAssessmentName));
+                allAssessments.sort(Comparator.comparing(Assessments::getAssessmentId));
                 repository = new Repository(getApplication());
                 RecyclerView recyclerView = findViewById(R.id.assessmentListRecycler);
                 recyclerView.setLayoutManager(new LinearLayoutManager(this));
-                final AssessmentAdapterFromCourse assessmentAdapter = new AssessmentAdapterFromCourse(this);
+                final AssessmentAdapterToDetail assessmentAdapter = new AssessmentAdapterToDetail(this);
                 recyclerView.setAdapter(assessmentAdapter);
                 assessmentAdapter.setAssessments(allAssessments);
                 return true;

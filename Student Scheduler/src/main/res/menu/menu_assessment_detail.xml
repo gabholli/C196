@@ -15,10 +15,10 @@
 
     <item android:title="Notify Assessment Start Date"
         android:orderInCategory="100"
-        android:id="@+id/notifyAssessmentStart"/>
+        android:id="@+id/assessmentNotifyStart"/>
 
     <item android:title="Notify Assessment End Date"
         android:orderInCategory="100"
-        android:id="@+id/notifyAssessmentEnd"/>
+        android:id="@+id/assessmentNotifyEnd"/>
 
 </menu>

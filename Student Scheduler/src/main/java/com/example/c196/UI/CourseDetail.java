@@ -113,10 +113,10 @@ public class CourseDetail extends AppCompatActivity {
         final AssessmentAdapterFromCourse assessmentListAdapter = new AssessmentAdapterFromCourse(this);
         recyclerView.setAdapter(assessmentListAdapter);
         List<Assessments> filteredAssessments = new ArrayList<>();
-        filteredAssessments.sort(Comparator.comparing(Assessments::getAssessmentName));
         for (Assessments a : repository.getAllAssessments()) {
             if (a.getCourseId() == courseId) filteredAssessments.add(a);
         }
+        filteredAssessments.sort(Comparator.comparing(Assessments::getAssessmentId));
         assessmentListAdapter.setAssessments(filteredAssessments);
 
         String myFormat = "MM/dd/yy";
@@ -228,7 +228,7 @@ public class CourseDetail extends AppCompatActivity {
                 final AssessmentAdapterFromCourse assessmentListAdapter = new AssessmentAdapterFromCourse(this);
                 recyclerView.setAdapter(assessmentListAdapter);
                 List<Assessments> filteredAssessments = new ArrayList<>();
-                filteredAssessments.sort(Comparator.comparing(Assessments::getAssessmentName));
+                filteredAssessments.sort(Comparator.comparing(Assessments::getAssessmentId));
 
                 for (Assessments a : repository.getAllAssessments()) {
                     if (a.getCourseId() == courseId) filteredAssessments.add(a);
@@ -374,7 +374,7 @@ public class CourseDetail extends AppCompatActivity {
 
     }
 
-    public static boolean checkCourseDates(String d1, String d2) throws ParseException {
+    private static boolean checkCourseDates(String d1, String d2) throws ParseException {
         SimpleDateFormat simpleDateFormat = new SimpleDateFormat("MM/dd/yy");
         return simpleDateFormat.parse(d1).before(simpleDateFormat.parse(d2)) ||
                 simpleDateFormat.parse(d1).equals(simpleDateFormat.parse(d2));

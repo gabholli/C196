@@ -64,12 +64,12 @@ public class AssessmentAdapterFromCourse extends RecyclerView.Adapter<Assessment
             if (mAssessments != null) {
                 Assessments current = mAssessments.get(position);
                 String name = current.getAssessmentName();
-                int assessmentId = current.getAssessmentId();
+                String type = current.getAssessmentType();
                 holder.assessmentItemView.setText(name);
-                holder.assessmentItemView2.setText(Integer.toString(assessmentId));
+                holder.assessmentItemView2.setText(type);
             } else {
                 holder.assessmentItemView.setText("No Assessment Name");
-                holder.assessmentItemView2.setText("No Assessment ID");
+                holder.assessmentItemView2.setText("No Assessment Type");
             }
         }
 

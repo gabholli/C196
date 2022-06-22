@@ -13,7 +13,7 @@
         android:layout_marginStart="17dp"
         android:layout_marginTop="28dp"
         android:layout_marginBottom="19dp"
-        android:text="List Of All Assessments:"
+        android:text="List Of All Assessments (Assessment Name and Type Shown):"
         app:layout_constraintBottom_toTopOf="@+id/assessmentListRecycler"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
