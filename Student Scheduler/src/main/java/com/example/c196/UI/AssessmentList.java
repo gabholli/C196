@@ -70,6 +70,9 @@ public class AssessmentList extends AppCompatActivity {
         if (repository.getAllCourses().isEmpty() && repository.getAllAssessments().isEmpty()) {
             Toast.makeText(AssessmentList.this, "Please add a course before adding an assessment",
                     Toast.LENGTH_LONG).show();
+        } else if (repository.getAllCourses().isEmpty()) {
+            Toast.makeText(AssessmentList.this, "Please add a course before " +
+                    "adding an assessment", Toast.LENGTH_LONG).show();
         } else {
             Intent intent = new Intent(AssessmentList.this, AssessmentDetail.class);
             startActivity(intent);

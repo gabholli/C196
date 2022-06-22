@@ -196,7 +196,10 @@ public class AssessmentDetail extends AppCompatActivity {
             case R.id.assessmentSave:
                 Assessments assessment;
 
-                if (editName.getText().toString().isEmpty() || editStart.getText().toString().isEmpty() ||
+                if (repository.getAllCourses().isEmpty()) {
+                    Toast.makeText(AssessmentDetail.this, "Please add a course before " +
+                            "saving an assessment", Toast.LENGTH_LONG).show();
+                } else if (editName.getText().toString().isEmpty() || editStart.getText().toString().isEmpty() ||
                         editEnd.getText().toString().isEmpty()) {
                     Toast.makeText(AssessmentDetail.this, "Please fill in all fields", Toast.LENGTH_LONG).show();
                 } else {
