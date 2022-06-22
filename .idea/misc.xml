@@ -29,7 +29,7 @@
         <entry key="..\:/Users/gholl/AndroidStudioProjects/C196/Student Scheduler/src/main/res/layout/activity_term_lis.xml" value="0.1" />
         <entry key="..\:/Users/gholl/AndroidStudioProjects/C196/Student Scheduler/src/main/res/layout/activity_term_list.xml" value="0.264" />
         <entry key="..\:/Users/gholl/AndroidStudioProjects/C196/Student Scheduler/src/main/res/layout/assessment_detail_row.xml" value="0.1" />
-        <entry key="..\:/Users/gholl/AndroidStudioProjects/C196/Student Scheduler/src/main/res/layout/assessment_list_row.xml" value="0.1" />
+        <entry key="..\:/Users/gholl/AndroidStudioProjects/C196/Student Scheduler/src/main/res/layout/assessment_list_row.xml" value="0.4" />
         <entry key="..\:/Users/gholl/AndroidStudioProjects/C196/Student Scheduler/src/main/res/layout/course_detail_datepicker.xml" value="0.1" />
         <entry key="..\:/Users/gholl/AndroidStudioProjects/C196/Student Scheduler/src/main/res/layout/course_detail_row.xml" value="0.10648148148148148" />
         <entry key="..\:/Users/gholl/AndroidStudioProjects/C196/Student Scheduler/src/main/res/layout/course_list_ite.xml" value="0.11481481481481481" />
@@ -37,7 +37,7 @@
         <entry key="..\:/Users/gholl/AndroidStudioProjects/C196/Student Scheduler/src/main/res/layout/course_list_row.xml" value="0.25" />
         <entry key="..\:/Users/gholl/AndroidStudioProjects/C196/Student Scheduler/src/main/res/layout/course_listt.xml" value="0.264" />
         <entry key="..\:/Users/gholl/AndroidStudioProjects/C196/Student Scheduler/src/main/res/layout/term_detail_course_list_item.xml" value="0.1" />
-        <entry key="..\:/Users/gholl/AndroidStudioProjects/C196/Student Scheduler/src/main/res/layout/term_detail_course_list_row.xml" value="0.2" />
+        <entry key="..\:/Users/gholl/AndroidStudioProjects/C196/Student Scheduler/src/main/res/layout/term_detail_course_list_row.xml" value="0.4" />
         <entry key="..\:/Users/gholl/AndroidStudioProjects/C196/Student Scheduler/src/main/res/layout/term_list_item.xml" value="0.1" />
         <entry key="..\:/Users/gholl/AndroidStudioProjects/C196/Student Scheduler/src/main/res/layout/term_list_row.xml" value="0.25" />
         <entry key="..\:/Users/gholl/AndroidStudioProjects/C196/Student Scheduler/src/main/res/menu/course_detail_menu.xml" value="0.10833333333333334" />

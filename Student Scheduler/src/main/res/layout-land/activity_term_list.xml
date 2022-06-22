@@ -36,7 +36,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="5dp"
-        android:layout_marginTop="32dp"
+        android:layout_marginTop="30dp"
         android:layout_marginBottom="25dp"
         android:text="Please Select A Term (Term Name And Term ID Shown):"
         app:layout_constraintBottom_toTopOf="@+id/recyclerView10"
