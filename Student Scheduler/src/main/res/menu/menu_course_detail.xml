@@ -1,27 +1,33 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
 
-    <item android:title="Refresh"
+    <item
+        android:id="@+id/courseDetailRefresh"
         android:orderInCategory="100"
-        android:id="@+id/courseDetailRefresh"/>
+        android:title="Refresh" />
 
-    <item android:title="Save Course"
+    <item
+        android:id="@+id/courseSave"
         android:orderInCategory="100"
-        android:id="@+id/courseSave"/>
+        android:title="Save Course" />
 
-    <item android:title="Delete Course"
+    <item
+        android:id="@+id/courseDelete"
         android:orderInCategory="100"
-        android:id="@+id/courseDelete"/>
+        android:title="Delete Course" />
 
-    <item android:title="Share Note"
+    <item
+        android:id="@+id/shareNote"
         android:orderInCategory="100"
-        android:id="@+id/shareNote"/>
+        android:title="Share Note" />
 
-    <item android:title="Notify Course Start Date"
+    <item
+        android:id="@+id/notifyStart"
         android:orderInCategory="100"
-        android:id="@+id/notifyStart"/>
+        android:title="Notify Course Start Date" />
 
-    <item android:title="Notify Course End Date"
+    <item
+        android:id="@+id/notifyEnd"
         android:orderInCategory="100"
-        android:id="@+id/notifyEnd"/>
+        android:title="Notify Course End Date" />
 </menu>

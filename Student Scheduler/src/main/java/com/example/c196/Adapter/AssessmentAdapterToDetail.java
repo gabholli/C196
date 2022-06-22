@@ -24,7 +24,7 @@ public class AssessmentAdapterToDetail extends RecyclerView.Adapter<AssessmentAd
         private final TextView assessmentItemView;
         private final TextView assessmentItemView2;
 
-        private AssessmentDetailViewHolder(View itemView ) {
+        private AssessmentDetailViewHolder(View itemView) {
             super(itemView);
             assessmentItemView = itemView.findViewById(R.id.assessmentListTitleRow);
             assessmentItemView2 = itemView.findViewById(R.id.assessmentListIdRow);
@@ -45,6 +45,7 @@ public class AssessmentAdapterToDetail extends RecyclerView.Adapter<AssessmentAd
             });
         }
     }
+
     private List<Assessments> mAssessments;
     private final Context context;
     private final LayoutInflater mInflater;
@@ -53,6 +54,7 @@ public class AssessmentAdapterToDetail extends RecyclerView.Adapter<AssessmentAd
         mInflater = LayoutInflater.from(context);
         this.context = context;
     }
+
     @NonNull
     @Override
     public AssessmentAdapterToDetail.AssessmentDetailViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {

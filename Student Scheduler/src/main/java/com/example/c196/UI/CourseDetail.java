@@ -266,7 +266,7 @@ public class CourseDetail extends AppCompatActivity {
                                 "to course list and refresh", Toast.LENGTH_LONG).show();
 
                     } else {
-                        course = new Courses(courseId, editTitle.getText(). toString(), editStart.getText().toString(),
+                        course = new Courses(courseId, editTitle.getText().toString(), editStart.getText().toString(),
                                 editEnd.getText().toString(), editStatus.getText().toString(),
                                 editName.getText().toString(), editPhone.getText().toString(),
                                 editEmail.getText().toString(), editNote.getText().toString(), (Integer) termSpinner.getSelectedItem());
@@ -300,8 +300,7 @@ public class CourseDetail extends AppCompatActivity {
                 if (title == null) {
                     Toast.makeText(CourseDetail.this, "Please save, return to course list and refresh",
                             Toast.LENGTH_LONG).show();
-                }
-                else if (editNote.getText().toString().isEmpty()) {
+                } else if (editNote.getText().toString().isEmpty()) {
                     Toast.makeText(CourseDetail.this, "Please enter a note to share",
                             Toast.LENGTH_LONG).show();
                 } else {

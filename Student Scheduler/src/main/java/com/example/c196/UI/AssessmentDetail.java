@@ -249,7 +249,7 @@ public class AssessmentDetail extends AppCompatActivity {
                 } else {
                     repository.delete(currentAssessment);
                     Toast.makeText(AssessmentDetail.this, currentAssessment.getAssessmentName() +
-                            " was deleted. Please save, return to assessment list" +
+                                    " was deleted. Please save, return to assessment list" +
                                     " and refresh",
                             Toast.LENGTH_LONG).show();
                 }

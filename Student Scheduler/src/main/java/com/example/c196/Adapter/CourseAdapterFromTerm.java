@@ -19,7 +19,6 @@ import java.util.List;
 public class CourseAdapterFromTerm extends RecyclerView.Adapter<CourseAdapterFromTerm.CourseViewHolder> {
 
 
-
     class CourseViewHolder extends RecyclerView.ViewHolder {
 
         private final TextView courseItemView;
@@ -69,8 +68,7 @@ public class CourseAdapterFromTerm extends RecyclerView.Adapter<CourseAdapterFro
             int courseId = current.getCourseId();
             holder.courseItemView.setText(title);
             holder.courseItemView2.setText(Integer.toString(courseId));
-        }
-        else {
+        } else {
             holder.courseItemView.setText("No Course Title");
             holder.courseItemView2.setText("No Course ID");
         }
@@ -80,6 +78,7 @@ public class CourseAdapterFromTerm extends RecyclerView.Adapter<CourseAdapterFro
         mCourses = courses;
         notifyDataSetChanged();
     }
+
     @Override
     public int getItemCount() {
         return mCourses.size();

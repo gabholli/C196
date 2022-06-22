@@ -16,7 +16,9 @@ import com.example.c196.Entity.Terms;
 @Database(entities = {Assessments.class, Courses.class, Terms.class}, version = 23, exportSchema = false)
 public abstract class DatabaseBuilder extends RoomDatabase {
     public abstract AssessmentDAO assessmentDAO();
+
     public abstract CourseDAO courseDAO();
+
     public abstract TermDAO termDAO();
 
     private static volatile DatabaseBuilder INSTANCE;
@@ -26,7 +28,7 @@ public abstract class DatabaseBuilder extends RoomDatabase {
             synchronized (DatabaseBuilder.class) {
                 if (INSTANCE == null) {
                     INSTANCE = Room.databaseBuilder(context.getApplicationContext(),
-                            DatabaseBuilder.class, "Database.db")
+                                    DatabaseBuilder.class, "Database.db")
                             .fallbackToDestructiveMigration()
                             .build();
                 }

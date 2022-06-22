@@ -19,11 +19,11 @@ import java.util.List;
 public class CourseAdapterToDetail extends RecyclerView.Adapter<CourseAdapterToDetail.CourseDetailViewHolder> {
 
 
-
     class CourseDetailViewHolder extends RecyclerView.ViewHolder {
 
         private final TextView courseItemView;
         private final TextView courseItemView2;
+
         private CourseDetailViewHolder(View itemView) {
             super(itemView);
             courseItemView = itemView.findViewById(R.id.termDetailCourseListTitleRow);
@@ -75,8 +75,7 @@ public class CourseAdapterToDetail extends RecyclerView.Adapter<CourseAdapterToD
             int courseId = current.getCourseId();
             holder.courseItemView.setText(title);
             holder.courseItemView2.setText(Integer.toString(courseId));
-        }
-        else {
+        } else {
             holder.courseItemView.setText("No Course Title");
             holder.courseItemView2.setText("No Course ID");
         }
@@ -86,6 +85,7 @@ public class CourseAdapterToDetail extends RecyclerView.Adapter<CourseAdapterToD
         mCourses = courses;
         notifyDataSetChanged();
     }
+
     @Override
     public int getItemCount() {
         return mCourses.size();

@@ -22,7 +22,7 @@ import java.util.List;
 public class TermList extends AppCompatActivity {
     private Repository repository;
 
-   public static RecyclerView termListRecyclerView;
+    public static RecyclerView termListRecyclerView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

@@ -43,44 +43,45 @@ public class AssessmentAdapterFromCourse extends RecyclerView.Adapter<Assessment
             }));
         }
     }
-        private List<Assessments> mAssessments;
-        private final Context context;
-        private final LayoutInflater mInflater;
 
-        public AssessmentAdapterFromCourse(Context context) {
-            mInflater = LayoutInflater.from(context);
-            this.context = context;
-        }
+    private List<Assessments> mAssessments;
+    private final Context context;
+    private final LayoutInflater mInflater;
 
-        @NonNull
-        @Override
-        public AssessmentViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-            View itemView = mInflater.inflate(R.layout.assessment_list_row, parent, false);
-            return new AssessmentViewHolder(itemView);
-        }
+    public AssessmentAdapterFromCourse(Context context) {
+        mInflater = LayoutInflater.from(context);
+        this.context = context;
+    }
 
-        @Override
-        public void onBindViewHolder(@NonNull AssessmentViewHolder holder, int position) {
-            if (mAssessments != null) {
-                Assessments current = mAssessments.get(position);
-                String name = current.getAssessmentName();
-                String type = current.getAssessmentType();
-                holder.assessmentItemView.setText(name);
-                holder.assessmentItemView2.setText(type);
-            } else {
-                holder.assessmentItemView.setText("No Assessment Name");
-                holder.assessmentItemView2.setText("No Assessment Type");
-            }
-        }
+    @NonNull
+    @Override
+    public AssessmentViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+        View itemView = mInflater.inflate(R.layout.assessment_list_row, parent, false);
+        return new AssessmentViewHolder(itemView);
+    }
 
-        public void setAssessments(List<Assessments> assessments) {
-            mAssessments = assessments;
-            notifyDataSetChanged();
+    @Override
+    public void onBindViewHolder(@NonNull AssessmentViewHolder holder, int position) {
+        if (mAssessments != null) {
+            Assessments current = mAssessments.get(position);
+            String name = current.getAssessmentName();
+            String type = current.getAssessmentType();
+            holder.assessmentItemView.setText(name);
+            holder.assessmentItemView2.setText(type);
+        } else {
+            holder.assessmentItemView.setText("No Assessment Name");
+            holder.assessmentItemView2.setText("No Assessment Type");
         }
+    }
 
-        @Override
-        public int getItemCount() {
-            return mAssessments.size();
-        }
+    public void setAssessments(List<Assessments> assessments) {
+        mAssessments = assessments;
+        notifyDataSetChanged();
+    }
+
+    @Override
+    public int getItemCount() {
+        return mAssessments.size();
+    }
 }
 

@@ -29,8 +29,8 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="9dp"
         android:layout_marginBottom="59dp"
-        android:text="Terms List"
         android:onClick="enterTermsList"
+        android:text="Terms List"
         app:layout_constraintBottom_toTopOf="@+id/courseButton"
         app:layout_constraintStart_toStartOf="@+id/courseButton" />
 
@@ -40,8 +40,8 @@
         android:layout_height="wrap_content"
         android:layout_marginEnd="20dp"
         android:layout_marginBottom="67dp"
-        android:text="Courses List"
         android:onClick="enterCourseList"
+        android:text="Courses List"
         app:layout_constraintBottom_toTopOf="@+id/assessmentButton"
         app:layout_constraintEnd_toEndOf="@+id/assessmentButton" />
 
@@ -50,8 +50,8 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginBottom="246dp"
-        android:text="Assessments List"
         android:onClick="enterAssessmentsList"
+        android:text="Assessments List"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
