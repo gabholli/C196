@@ -56,7 +56,7 @@ public class CourseList extends AppCompatActivity {
             case R.id.courseListRefresh:
                 repository = new Repository(getApplication());
                 List<Courses> allCourses = repository.getAllCourses();
-                allCourses.sort(Comparator.comparing(Courses::getCourseTitle));
+                allCourses.sort(Comparator.comparing(Courses::getCourseId));
                 RecyclerView recyclerView = findViewById(R.id.recyclerViewCourseList);
                 recyclerView.setLayoutManager(new LinearLayoutManager(this));
                 final CourseAdapterToDetail courseAdapter = new CourseAdapterToDetail(this);
