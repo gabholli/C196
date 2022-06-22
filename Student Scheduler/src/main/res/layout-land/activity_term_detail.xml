@@ -107,12 +107,11 @@
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/termDetailRecyclerView"
         android:layout_width="393dp"
-        android:layout_height="0dp"
-        android:layout_marginStart="5dp"
-        android:layout_marginBottom="1682dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toStartOf="@+id/textView5"
-        app:layout_constraintTop_toBottomOf="@+id/textView5" />
+        android:layout_height="188dp"
+        android:layout_marginStart="283dp"
+        android:layout_marginTop="46dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
         android:id="@+id/textView5"
