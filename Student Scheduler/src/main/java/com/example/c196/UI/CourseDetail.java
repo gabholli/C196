@@ -57,7 +57,6 @@ public class CourseDetail extends AppCompatActivity {
     EditText editTitle;
     EditText editStart;
     EditText editEnd;
-    EditText editStatus;
     EditText editName;
     EditText editPhone;
     EditText editEmail;
@@ -65,6 +64,7 @@ public class CourseDetail extends AppCompatActivity {
 
     Repository repository;
 
+    Spinner statusSpinner;
     Spinner termSpinner;
     DatePickerDialog.OnDateSetListener startCourseDate;
     DatePickerDialog.OnDateSetListener endCourseDate;
@@ -88,8 +88,6 @@ public class CourseDetail extends AppCompatActivity {
         editEnd = findViewById(R.id.courseEndEditText);
         editEnd.setText(endDate);
         status = getIntent().getStringExtra("status");
-        editStatus = findViewById(R.id.courseStatusEditText);
-        editStatus.setText(status);
         instructorName = getIntent().getStringExtra("name");
         editName = findViewById(R.id.instructorNameEditText);
         editName.setText(instructorName);
@@ -105,7 +103,7 @@ public class CourseDetail extends AppCompatActivity {
         courseId = getIntent().getIntExtra("id", -1);
         termId = getIntent().getIntExtra("termId", -1);
 
-
+        statusSpinner = (Spinner) findViewById(R.id.statusSpinner);
         termSpinner = (Spinner) findViewById(R.id.termSpinner);
         RecyclerView recyclerView = findViewById(R.id.associatedAssessmentsRecycler);
         repository = new Repository(getApplication());
@@ -131,10 +129,23 @@ public class CourseDetail extends AppCompatActivity {
             termsIntegerList.add(termIntegerValue);
         }
 
-        ArrayAdapter<Integer> adapter = new ArrayAdapter<>(this, android.R.layout
+        List<String> statusList = new ArrayList<>();
+        statusList.add("In Progress");
+        statusList.add("Completed");
+        statusList.add("Dropped");
+        statusList.add("Plan To Take");
+
+        ArrayAdapter<String> adapterStatus = new ArrayAdapter<>(this, android.R.layout
+                .simple_spinner_item, statusList);
+        adapterStatus.setDropDownViewResource(android.R.layout.simple_spinner_item);
+        statusSpinner.setAdapter(adapterStatus);
+
+        statusSpinner.setSelection(statusList.indexOf(status));
+
+        ArrayAdapter<Integer> adapterTerm = new ArrayAdapter<>(this, android.R.layout
                 .simple_spinner_item, termsIntegerList);
-        adapter.setDropDownViewResource(android.R.layout.simple_spinner_item);
-        termSpinner.setAdapter(adapter);
+        adapterTerm.setDropDownViewResource(android.R.layout.simple_spinner_item);
+        termSpinner.setAdapter(adapterTerm);
 
         termSpinner.setSelection(termsIntegerList.indexOf(termId));
 
@@ -228,11 +239,11 @@ public class CourseDetail extends AppCompatActivity {
                 final AssessmentAdapterFromCourse assessmentListAdapter = new AssessmentAdapterFromCourse(this);
                 recyclerView.setAdapter(assessmentListAdapter);
                 List<Assessments> filteredAssessments = new ArrayList<>();
-                filteredAssessments.sort(Comparator.comparing(Assessments::getAssessmentId));
 
                 for (Assessments a : repository.getAllAssessments()) {
                     if (a.getCourseId() == courseId) filteredAssessments.add(a);
                 }
+                filteredAssessments.sort(Comparator.comparing(Assessments::getAssessmentId));
                 assessmentListAdapter.setAssessments(filteredAssessments);
                 return true;
             case R.id.courseSave:
@@ -241,7 +252,7 @@ public class CourseDetail extends AppCompatActivity {
                 try {
 
                     if (editTitle.getText().toString().isEmpty() || editStart.getText().toString().isEmpty() ||
-                            editEnd.getText().toString().isEmpty() || editStatus.getText().toString().isEmpty() ||
+                            editEnd.getText().toString().isEmpty() ||
                             editName.getText().toString().isEmpty() || editPhone.getText().toString().isEmpty() ||
                             editEmail.getText().toString().isEmpty()) {
                         Toast.makeText(CourseDetail.this, "Please fill in all fields", Toast.LENGTH_LONG).show();
@@ -249,7 +260,7 @@ public class CourseDetail extends AppCompatActivity {
                         Toast.makeText(CourseDetail.this, "Start date cannot be after end date", Toast.LENGTH_LONG).show();
                     } else if (repository.getAllCourses().isEmpty()) {
                         course = new Courses(1, editTitle.getText().toString(), editStart.getText().toString(),
-                                editEnd.getText().toString(), editStatus.getText().toString(),
+                                editEnd.getText().toString(), (String) statusSpinner.getSelectedItem(),
                                 editName.getText().toString(), editPhone.getText().toString(),
                                 editEmail.getText().toString(), editNote.getText().toString(), (Integer) termSpinner.getSelectedItem());
                         repository.insert(course);
@@ -258,7 +269,7 @@ public class CourseDetail extends AppCompatActivity {
                     } else if (courseId == -1) {
                         int newId = repository.getAllCourses().get(repository.getAllCourses().size() - 1).getCourseId() + 1;
                         course = new Courses(newId, editTitle.getText().toString(), editStart.getText().toString(),
-                                editEnd.getText().toString(), editStatus.getText().toString(),
+                                editEnd.getText().toString(), (String) statusSpinner.getSelectedItem(),
                                 editName.getText().toString(), editPhone.getText().toString(),
                                 editEmail.getText().toString(), editNote.getText().toString(), (Integer) termSpinner.getSelectedItem());
                         repository.insert(course);
@@ -267,7 +278,7 @@ public class CourseDetail extends AppCompatActivity {
 
                     } else {
                         course = new Courses(courseId, editTitle.getText().toString(), editStart.getText().toString(),
-                                editEnd.getText().toString(), editStatus.getText().toString(),
+                                editEnd.getText().toString(), (String) statusSpinner.getSelectedItem(),
                                 editName.getText().toString(), editPhone.getText().toString(),
                                 editEmail.getText().toString(), editNote.getText().toString(), (Integer) termSpinner.getSelectedItem());
                         repository.update(course);
