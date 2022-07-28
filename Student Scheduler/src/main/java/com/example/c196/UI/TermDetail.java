@@ -186,8 +186,8 @@ public class TermDetail extends AppCompatActivity {
 
                 try {
 
-                    if (editTitle.getText().toString().isEmpty() || editStartDate.getText().toString().isEmpty()
-                            || editEndDate.getText().toString().isEmpty()) {
+                    if (EntryScreen.checkForEmptySpaces(editTitle.getText().toString()) || EntryScreen.checkForEmptySpaces(editStartDate.getText().toString())
+                            || EntryScreen.checkForEmptySpaces(editEndDate.getText().toString())) {
                         Toast.makeText(TermDetail.this, "Please fill in all fields", Toast.LENGTH_LONG).show();
                     } else if (!checkTermDates(editStartDate.getText().toString(), editEndDate.getText().toString())) {
                         Toast.makeText(TermDetail.this, "Start date cannot be after end date", Toast.LENGTH_LONG).show();

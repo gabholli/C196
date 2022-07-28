@@ -26,4 +26,9 @@ public class EntryScreen extends AppCompatActivity {
         Intent intent = new Intent(EntryScreen.this, HomeScreen.class);
         startActivity(intent);
     }
+
+    public static boolean checkForEmptySpaces(String value) {
+        return value.length() > 0 && value.trim().matches("") || value.isEmpty();
+    }
+
 }

@@ -251,10 +251,10 @@ public class CourseDetail extends AppCompatActivity {
 
                 try {
 
-                    if (editTitle.getText().toString().isEmpty() || editStart.getText().toString().isEmpty() ||
-                            editEnd.getText().toString().isEmpty() ||
-                            editName.getText().toString().isEmpty() || editPhone.getText().toString().isEmpty() ||
-                            editEmail.getText().toString().isEmpty()) {
+                    if (EntryScreen.checkForEmptySpaces(editTitle.getText().toString()) || EntryScreen.checkForEmptySpaces(editStart.getText().toString()) ||
+                            EntryScreen.checkForEmptySpaces(editEnd.getText().toString()) ||
+                            EntryScreen.checkForEmptySpaces(editName.getText().toString()) || EntryScreen.checkForEmptySpaces(editPhone.getText().toString())||
+                            EntryScreen.checkForEmptySpaces(editEmail.getText().toString())) {
                         Toast.makeText(CourseDetail.this, "Please fill in all fields", Toast.LENGTH_LONG).show();
                     } else if (!checkCourseDates(editStart.getText().toString(), editEnd.getText().toString())) {
                         Toast.makeText(CourseDetail.this, "Start date cannot be after end date", Toast.LENGTH_LONG).show();

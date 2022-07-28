@@ -199,8 +199,8 @@ public class AssessmentDetail extends AppCompatActivity {
                 if (repository.getAllCourses().isEmpty()) {
                     Toast.makeText(AssessmentDetail.this, "Please add a course before " +
                             "saving an assessment", Toast.LENGTH_LONG).show();
-                } else if (editName.getText().toString().isEmpty() || editStart.getText().toString().isEmpty() ||
-                        editEnd.getText().toString().isEmpty()) {
+                } else if (EntryScreen.checkForEmptySpaces(editName.getText().toString()) || EntryScreen.checkForEmptySpaces(editStart.getText().toString()) ||
+                        EntryScreen.checkForEmptySpaces(editEnd.getText().toString())) {
                     Toast.makeText(AssessmentDetail.this, "Please fill in all fields", Toast.LENGTH_LONG).show();
                 } else {
                     try {
